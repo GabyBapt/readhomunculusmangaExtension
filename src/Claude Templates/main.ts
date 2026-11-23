@@ -44,7 +44,7 @@ import {
 import * as cheerio from "cheerio";
 
 // TODO(1) : le nom du fichier de config de CE dossier
-//import type SiteConfig from "./pbconfig";
+import type SiteConfig from "./pbconfig";
 
 // =====================================================================
 //  CONFIGURATION DU SITE — tout ce que tu dois remplir est ici
