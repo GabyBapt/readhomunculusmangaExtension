@@ -211,8 +211,7 @@ async function send(
 
   let lastError = new Error(`Requête échouée : ${url}`);
   for (let attempt = 0; attempt <= SITE.network.retries; attempt++) {
-    const request =
-      body === undefined ? { url, method, headers } : { url, method, headers, body };
+    const request = body === undefined ? { url, method, headers } : { url, method, headers, body };
     const [response, data] = await Application.scheduleRequest(request);
     const text = Application.arrayBufferToUTF8String(data);
 
@@ -285,9 +284,7 @@ export class SiteExtension implements ExtensionImpl<typeof SiteConfig> {
 
   async getDiscoverSections(): Promise<DiscoverSection[]> {
     if (SITE.mode === "single") {
-      return [
-        { id: "main", title: SITE.single.title, type: DiscoverSectionType.simpleCarousel },
-      ];
+      return [{ id: "main", title: SITE.single.title, type: DiscoverSectionType.simpleCarousel }];
     }
     return SITE.catalogue.sections.map((s) => ({
       id: s.id,
@@ -377,9 +374,7 @@ export class SiteExtension implements ExtensionImpl<typeof SiteConfig> {
       const first = SITE.catalogue.sections[0];
       if (!first) return { items: [] };
       const $ = await fetchHtml(absUrl(fill(first.url, { page: 1 })));
-      const cards = parseCards($).filter((c) =>
-        c.title.toLowerCase().includes(text.toLowerCase()),
-      );
+      const cards = parseCards($).filter((c) => c.title.toLowerCase().includes(text.toLowerCase()));
       return {
         items: cards.map((c) => ({
           mangaId: c.mangaId,
@@ -413,14 +408,12 @@ export class SiteExtension implements ExtensionImpl<typeof SiteConfig> {
   async getMangaDetails(mangaId: string): Promise<SourceManga> {
     const $ = await fetchHtml(seriesUrl(mangaId));
     const d = SITE.details;
-    const text = (selector: string): string =>
-      selector ? $(selector).first().text().trim() : "";
+    const text = (selector: string): string => (selector ? $(selector).first().text().trim() : "");
 
     const og = (name: string): string =>
       $(`meta[property="og:${name}"]`).attr("content")?.trim() ?? "";
 
-    const cover =
-      (d.cover ? firstAttr($(d.cover).first(), SITE.images.attrs) : "") || og("image");
+    const cover = (d.cover ? firstAttr($(d.cover).first(), SITE.images.attrs) : "") || og("image");
 
     // Résumé : paragraphe après un texte fixe, sinon sélecteur, sinon og:description
     let synopsis = "";
