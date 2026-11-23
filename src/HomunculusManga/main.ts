@@ -232,4 +232,4 @@ export class HomunculusExtension implements ExtensionImpl<typeof HomunculusConfi
   }
 }
 
-export const Homunculus = new HomunculusExtension();
+export const HomunculusManga = new HomunculusExtension();
